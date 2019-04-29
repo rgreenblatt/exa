@@ -2,6 +2,12 @@
 
 [exa](https://the.exa.website/) is a replacement for `ls` written in Rust.
 
+## Rationale
+
+**exa**  is a modern replacement for the command-line program ls that ships with Unix and Linux operating systems, with more features and better defaults. It uses colours to distinguish file types and metadata. It knows about symlinks, extended attributes, and Git. And it’s **small**, **fast**, and just one **single binary**.
+
+By deliberately making some decisions differently, exa attempts to be a more featureful, more user-friendly version of ls.
+
 ## Screenshots
 
 ![Screenshots of exa](screenshots.png)
@@ -30,6 +36,7 @@ exa’s options are almost, but not quite, entirely unlike `ls`'s.
 - **-r**, **--reverse**: reverse the sort order
 - **-s**, **--sort=(field)**: which field to sort by
 - **--group-directories-first**: list directories before other files
+- **-D**, **--only-dirs**: list only directories
 - **--git-ignore**: ignore files mentioned in `.gitignore`
 - **-I**, **--ignore-glob=(globs)**: glob patterns (pipe-separated) of files to ignore
 
@@ -51,7 +58,7 @@ These options are available when running with --long (`-l`):
 - **-u**, **--accessed**: use the accessed timestamp field
 - **-U**, **--created**: use the created timestamp field
 - **-@**, **--extended**: list each file's extended attributes and sizes
-- **--git**: list each file's Git status, if tracked
+- **--git**: list each file's Git status, if tracked or ignored
 - **--time-style**: how to format timestamps
 
 - Valid **--color** options are **always**, **automatic**, and **never**.
@@ -80,6 +87,23 @@ or:
 
 Cargo will build the `exa` binary and place it in `$HOME/.cargo` (this location can be overridden by setting the `--root` option).
 
+### Homebrew
+
+If you're using [homebrew](https://brew.sh/), you can use the `brew install` command:
+
+    brew install exa
+
+or:
+
+    brew install exa --without-git
+
+[Formulae](https://github.com/Homebrew/homebrew-core/blob/master/Formula/exa.rb)
+
+### Nix
+
+`exa` is also installable through [the derivation](https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/misc/exa/default.nix) using the [nix package manager](https://nixos.org/nix/) by running:
+
+    nix-env -i exa
 
 ## Testing with Vagrant
 

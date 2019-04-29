@@ -83,7 +83,7 @@ impl Vars for LiveVars {
 /// listed before they’re actually listed, if the options demand it.
 fn git_options(options: &Options, args: &[&OsStr]) -> Option<GitCache> {
     if options.should_scan_for_git() {
-        Some(args.iter().map(|os| PathBuf::from(os)).collect())
+        Some(args.iter().map(PathBuf::from).collect())
     }
     else {
         None
@@ -131,7 +131,7 @@ impl<'args, 'w, W: Write + 'w> Exa<'args, 'w, W> {
                     writeln!(stderr(), "{:?}: {}", file_path, e)?;
                 },
                 Ok(f) => {
-                    if f.is_directory() && !self.options.dir_action.treat_dirs_as_files() {
+                    if f.points_to_directory() && !self.options.dir_action.treat_dirs_as_files() {
                         match f.to_dir() {
                             Ok(d) => dirs.push(d),
                             Err(e) => writeln!(stderr(), "{:?}: {}", file_path, e)?,
@@ -166,7 +166,7 @@ impl<'args, 'w, W: Write + 'w> Exa<'args, 'w, W> {
                 first = false;
             }
             else {
-                write!(self.writer, "\n")?;
+                writeln!(self.writer)?;
             }
 
             if !is_only_dir {
